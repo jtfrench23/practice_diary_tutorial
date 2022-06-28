@@ -1,0 +1,559 @@
+{
+    "name": "dev",
+    "uuid": "0ae35720-17c9-4d37-88f4-129528fd7e4b",
+    "components": [
+        {
+            "name": "hello_world_comp",
+            "hash": "89511ad6c3b33f99cd41530abbf46407",
+            "resources": [
+                {
+                    "name": "demo_db",
+                    "ruuid": "cdev::simple::relationaldb",
+                    "hash": "5c0562a16a8cd2ebd6549ba5de395dc2",
+                    "MasterUserPassword": "password",
+                    "SecondsToPause": 300,
+                    "DatabaseName": "default_diary",
+                    "EnableHttpEndpoint": true,
+                    "MaxCapacity": 64,
+                    "MasterUsername": "username",
+                    "Engine": "aurora-postgresql",
+                    "MinCapacity": 2
+                },
+                {
+                    "name": "sqlalchemy_aurora_data_api-py3-none-any",
+                    "ruuid": "cdev::simple::lambda_layer",
+                    "hash": "1786b4c3f661754635ac0b006596ec16",
+                    "artifact_path": ".cdev/intermediate/0ae35720-17c9-4d37-88f4-129528fd7e4b/sqlalchemy_aurora_data_api-py3-none-any.zip"
+                },
+                {
+                    "name": "hello_world_function",
+                    "ruuid": "cdev::simple::function",
+                    "hash": "a838e041c244c8a9fe01fe34262c9a1e",
+                    "external_dependencies": [
+                        {
+                            "name": "sqlalchemy_aurora_data_api-py3-none-any",
+                            "ruuid": "cdev::simple::lambda_layer",
+                            "key": "cloud_id",
+                            "type": "resource",
+                            "id": "cdev_cloud_output",
+                            "output_operations": []
+                        }
+                    ],
+                    "configuration": {
+                        "handler": "src.hello_world.resources.hello_world",
+                        "description": "",
+                        "environment_variables": {
+                            "CLUSTER_ARN": {
+                                "name": "demo_db",
+                                "ruuid": "cdev::simple::relationaldb",
+                                "key": "cluster_arn",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "SECRET_ARN": {
+                                "name": "demo_db",
+                                "ruuid": "cdev::simple::relationaldb",
+                                "key": "secret_arn",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "DB_NAME": "default_diary"
+                        },
+                        "memory_size": 128,
+                        "timeout": 30,
+                        "storage": 512
+                    },
+                    "src_code_hash": "c5b12f6fbabb9cb28b6fcbec29d104e7",
+                    "platform": "py38-x86_64",
+                    "filepath": ".cdev/intermediate/0ae35720-17c9-4d37-88f4-129528fd7e4b/src/hello_world/resources_hello_world_function.zip",
+                    "events": [
+                        {
+                            "originating_resource_name": "demoapi",
+                            "originating_resource_type": "cdev::simple::api",
+                            "hash": "f82eb260ef37cd71db856ca70005a936",
+                            "granting_permission": null,
+                            "path": "/hello_world",
+                            "verb": "GET",
+                            "api_id": {
+                                "name": "demoapi",
+                                "ruuid": "cdev::simple::api",
+                                "key": "cloud_id",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "route_id": {
+                                "name": "demoapi",
+                                "ruuid": "cdev::simple::api",
+                                "key": "endpoints",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": [
+                                    [
+                                        "__getitem__",
+                                        [
+                                            "/hello_world GET"
+                                        ],
+                                        {}
+                                    ]
+                                ]
+                            },
+                            "response_type": ""
+                        }
+                    ],
+                    "permissions": [
+                        {
+                            "arn": "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+                            "hash": "d1ce631b618175472020a0c0e62ec975"
+                        },
+                        {
+                            "actions": [
+                                "rds-data:BeginTransaction",
+                                "rds-data:BatchExecuteStatement",
+                                "rds-data:ExecuteStatement",
+                                "rds-data:CommitTransaction",
+                                "rds-data:RollbackTransaction"
+                            ],
+                            "cloud_id": {
+                                "name": "demo_db",
+                                "ruuid": "cdev::simple::relationaldb",
+                                "key": "cloud_id",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "effect": "Allow",
+                            "resource_suffix": null,
+                            "hash": "5716d4c838ca883b990461fa9761ef51"
+                        }
+                    ]
+                },
+                {
+                    "name": "create_post_function",
+                    "ruuid": "cdev::simple::function",
+                    "hash": "af1702c358b7e6c1a445b114d21d346a",
+                    "external_dependencies": [
+                        {
+                            "name": "sqlalchemy_aurora_data_api-py3-none-any",
+                            "ruuid": "cdev::simple::lambda_layer",
+                            "key": "cloud_id",
+                            "type": "resource",
+                            "id": "cdev_cloud_output",
+                            "output_operations": []
+                        }
+                    ],
+                    "configuration": {
+                        "handler": "src.hello_world.resources.create_post",
+                        "description": "",
+                        "environment_variables": {
+                            "CLUSTER_ARN": {
+                                "name": "demo_db",
+                                "ruuid": "cdev::simple::relationaldb",
+                                "key": "cluster_arn",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "SECRET_ARN": {
+                                "name": "demo_db",
+                                "ruuid": "cdev::simple::relationaldb",
+                                "key": "secret_arn",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "DB_NAME": "default_diary"
+                        },
+                        "memory_size": 128,
+                        "timeout": 30,
+                        "storage": 512
+                    },
+                    "src_code_hash": "a329c8d0362475f91dddb312826e1874",
+                    "platform": "py38-x86_64",
+                    "filepath": ".cdev/intermediate/0ae35720-17c9-4d37-88f4-129528fd7e4b/src/hello_world/resources_create_post_function.zip",
+                    "events": [
+                        {
+                            "originating_resource_name": "demoapi",
+                            "originating_resource_type": "cdev::simple::api",
+                            "hash": "6cea93036f3fe2b8140e92118f23c8ff",
+                            "granting_permission": null,
+                            "path": "/post/create",
+                            "verb": "POST",
+                            "api_id": {
+                                "name": "demoapi",
+                                "ruuid": "cdev::simple::api",
+                                "key": "cloud_id",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "route_id": {
+                                "name": "demoapi",
+                                "ruuid": "cdev::simple::api",
+                                "key": "endpoints",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": [
+                                    [
+                                        "__getitem__",
+                                        [
+                                            "/post/create POST"
+                                        ],
+                                        {}
+                                    ]
+                                ]
+                            },
+                            "response_type": ""
+                        }
+                    ],
+                    "permissions": [
+                        {
+                            "arn": "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+                            "hash": "d1ce631b618175472020a0c0e62ec975"
+                        },
+                        {
+                            "actions": [
+                                "rds-data:BeginTransaction",
+                                "rds-data:BatchExecuteStatement",
+                                "rds-data:ExecuteStatement",
+                                "rds-data:CommitTransaction",
+                                "rds-data:RollbackTransaction"
+                            ],
+                            "cloud_id": {
+                                "name": "demo_db",
+                                "ruuid": "cdev::simple::relationaldb",
+                                "key": "cloud_id",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "effect": "Allow",
+                            "resource_suffix": null,
+                            "hash": "5716d4c838ca883b990461fa9761ef51"
+                        }
+                    ]
+                },
+                {
+                    "name": "demoapi",
+                    "ruuid": "cdev::simple::api",
+                    "hash": "436fba4de81202ee8a189656035e4107",
+                    "authorizers": [],
+                    "allow_cors": true,
+                    "routes": [
+                        {
+                            "path": "/hello_world",
+                            "verb": "GET",
+                            "additional_scopes": [],
+                            "authorizer_name": null
+                        },
+                        {
+                            "path": "/post/create",
+                            "verb": "POST",
+                            "additional_scopes": [],
+                            "authorizer_name": null
+                        },
+                        {
+                            "path": "/posts/get",
+                            "verb": "GET",
+                            "additional_scopes": [],
+                            "authorizer_name": null
+                        }
+                    ]
+                },
+                {
+                    "name": "get_posts_function",
+                    "ruuid": "cdev::simple::function",
+                    "hash": "241a00bb0b73ba8d75c8afd66bb2133c",
+                    "filepath": ".cdev/intermediate/0ae35720-17c9-4d37-88f4-129528fd7e4b/src/hello_world/resources_get_posts_function.zip",
+                    "configuration": {
+                        "handler": "src.hello_world.resources.get_posts",
+                        "description": "",
+                        "environment_variables": {
+                            "CLUSTER_ARN": {
+                                "name": "demo_db",
+                                "ruuid": "cdev::simple::relationaldb",
+                                "key": "cluster_arn",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "SECRET_ARN": {
+                                "name": "demo_db",
+                                "ruuid": "cdev::simple::relationaldb",
+                                "key": "secret_arn",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "DB_NAME": "default_diary"
+                        },
+                        "memory_size": 128,
+                        "timeout": 30,
+                        "storage": 512
+                    },
+                    "events": [
+                        {
+                            "originating_resource_name": "demoapi",
+                            "originating_resource_type": "cdev::simple::api",
+                            "hash": "23595f240e0e79d011977b0c10108e61",
+                            "granting_permission": null,
+                            "path": "/posts/get",
+                            "verb": "GET",
+                            "api_id": {
+                                "name": "demoapi",
+                                "ruuid": "cdev::simple::api",
+                                "key": "cloud_id",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "route_id": {
+                                "name": "demoapi",
+                                "ruuid": "cdev::simple::api",
+                                "key": "endpoints",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": [
+                                    [
+                                        "__getitem__",
+                                        [
+                                            "/posts/get GET"
+                                        ],
+                                        {}
+                                    ]
+                                ]
+                            },
+                            "response_type": ""
+                        }
+                    ],
+                    "permissions": [
+                        {
+                            "actions": [
+                                "rds-data:BatchExecuteStatement",
+                                "rds-data:BeginTransaction",
+                                "rds-data:ExecuteStatement",
+                                "rds-data:CommitTransaction",
+                                "rds-data:RollbackTransaction"
+                            ],
+                            "cloud_id": {
+                                "name": "demo_db",
+                                "ruuid": "cdev::simple::relationaldb",
+                                "key": "cloud_id",
+                                "type": "resource",
+                                "id": "cdev_cloud_output",
+                                "output_operations": []
+                            },
+                            "effect": "Allow",
+                            "resource_suffix": null,
+                            "hash": "5716d4c838ca883b990461fa9761ef51"
+                        },
+                        {
+                            "arn": "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+                            "hash": "d1ce631b618175472020a0c0e62ec975"
+                        }
+                    ],
+                    "external_dependencies": [
+                        {
+                            "name": "sqlalchemy_aurora_data_api-py3-none-any",
+                            "ruuid": "cdev::simple::lambda_layer",
+                            "key": "cloud_id",
+                            "type": "resource",
+                            "id": "cdev_cloud_output",
+                            "output_operations": []
+                        }
+                    ],
+                    "src_code_hash": "f1dfb1abc2f115dfe451fa659891e392",
+                    "platform": "py38-x86_64"
+                }
+            ],
+            "references": [],
+            "cloud_output": {
+                "cdev::simple::relationaldb;demo_db": {
+                    "endpoint": "cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6.cluster-cjn1vnbkcn79.us-east-1.rds.amazonaws.com",
+                    "secret_arn": "arn:aws:secretsmanager:us-east-1:670580985562:secret:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6-config-yOE8VD",
+                    "cloud_id": "arn:aws:rds:us-east-1:670580985562:cluster:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6",
+                    "cluster_arn": "arn:aws:rds:us-east-1:670580985562:cluster:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6",
+                    "cdev_name": "demo_db",
+                    "cluster_name": "cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6",
+                    "cloud_region": "us-east-1"
+                },
+                "cdev::simple::lambda_layer;sqlalchemy_aurora_data_api-py3-none-any": {
+                    "cloud_id": "arn:aws:lambda:us-east-1:670580985562:layer:sqlalchemy_aurora_data_api_py3_none_any_1786b4c3f661754635ac0b006596ec16_c27998a1fa:1",
+                    "arn": "arn:aws:lambda:us-east-1:670580985562:layer:sqlalchemy_aurora_data_api_py3_none_any_1786b4c3f661754635ac0b006596ec16_c27998a1fa",
+                    "version": 1,
+                    "cloud_region": "us-east-1"
+                },
+                "cdev::simple::function;hello_world_function": {
+                    "function_name": "cdev_function_6d8b80ec8b93f01baf5fe2237084f0fc",
+                    "role_id": "arn:aws:iam::670580985562:role/role_cdev_function_6d8b80ec8b93f01baf5fe2237084f0fc",
+                    "role_name": "role_cdev_function_6d8b80ec8b93f01baf5fe2237084f0fc",
+                    "permissions": [
+                        {
+                            "hash": "5716d4c838ca883b990461fa9761ef51",
+                            "arn": "arn:aws:iam::670580985562:policy/817b6c0b-db93-4089-a733-b1ffdd80f3ea",
+                            "was_created": true
+                        },
+                        {
+                            "hash": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+                            "arn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+                            "was_created": false
+                        },
+                        {
+                            "hash": "d1ce631b618175472020a0c0e62ec975",
+                            "arn": "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+                            "was_created": false
+                        }
+                    ],
+                    "artifact_bucket": "cdev-working-artifacts",
+                    "artifact_key": "cdev_function_6d8b80ec8b93f01baf5fe2237084f0fc-a838e041c244c8a9fe01fe34262c9a1e.zip",
+                    "layers": [
+                        "arn:aws:lambda:us-east-1:670580985562:layer:sqlalchemy_aurora_data_api_py3_none_any_1786b4c3f661754635ac0b006596ec16_c27998a1fa:1"
+                    ],
+                    "cloud_id": "arn:aws:lambda:us-east-1:670580985562:function:cdev_function_6d8b80ec8b93f01baf5fe2237084f0fc",
+                    "events": {
+                        "f82eb260ef37cd71db856ca70005a936": {
+                            "integration_id": "we5bjag",
+                            "permission_stmt_id": "stmt-lkq5j8t",
+                            "api_id": "kra1mdglg1",
+                            "route_id": "lkq5j8t"
+                        }
+                    },
+                    "cloud_region": "us-east-1"
+                },
+                "cdev::simple::function;create_post_function": {
+                    "function_name": "cdev_function_04cfc05e17fb00b838106306409ad239",
+                    "role_id": "arn:aws:iam::670580985562:role/role_cdev_function_04cfc05e17fb00b838106306409ad239",
+                    "role_name": "role_cdev_function_04cfc05e17fb00b838106306409ad239",
+                    "permissions": [
+                        {
+                            "hash": "5716d4c838ca883b990461fa9761ef51",
+                            "arn": "arn:aws:iam::670580985562:policy/9d15061d-69cb-428c-bf99-23fbbaaba1be",
+                            "was_created": true
+                        },
+                        {
+                            "hash": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+                            "arn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+                            "was_created": false
+                        },
+                        {
+                            "hash": "d1ce631b618175472020a0c0e62ec975",
+                            "arn": "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+                            "was_created": false
+                        }
+                    ],
+                    "artifact_bucket": "cdev-working-artifacts",
+                    "artifact_key": "cdev_function_04cfc05e17fb00b838106306409ad239-af1702c358b7e6c1a445b114d21d346a.zip",
+                    "layers": [
+                        "arn:aws:lambda:us-east-1:670580985562:layer:sqlalchemy_aurora_data_api_py3_none_any_1786b4c3f661754635ac0b006596ec16_c27998a1fa:1"
+                    ],
+                    "cloud_id": "arn:aws:lambda:us-east-1:670580985562:function:cdev_function_04cfc05e17fb00b838106306409ad239",
+                    "events": {
+                        "6cea93036f3fe2b8140e92118f23c8ff": {
+                            "integration_id": "1z2eqy1",
+                            "permission_stmt_id": "stmt-s1pq9w7",
+                            "api_id": "kra1mdglg1",
+                            "route_id": "s1pq9w7"
+                        }
+                    },
+                    "cloud_region": "us-east-1"
+                },
+                "cdev::simple::api;demoapi": {
+                    "cloud_id": "kra1mdglg1",
+                    "endpoints": {
+                        "/hello_world GET": "lkq5j8t",
+                        "/post/create POST": "s1pq9w7",
+                        "/posts/get GET": "km44u7l"
+                    },
+                    "endpoint": "https://kra1mdglg1.execute-api.us-east-1.amazonaws.com/live",
+                    "cloud_region": "us-east-1"
+                },
+                "cdev::simple::function;get_posts_function": {
+                    "function_name": "cdev_function_9cea304ea16d5a1fe4a3640b8105b722",
+                    "role_id": "arn:aws:iam::670580985562:role/role_cdev_function_9cea304ea16d5a1fe4a3640b8105b722",
+                    "role_name": "role_cdev_function_9cea304ea16d5a1fe4a3640b8105b722",
+                    "permissions": [
+                        {
+                            "hash": "5716d4c838ca883b990461fa9761ef51",
+                            "arn": "arn:aws:iam::670580985562:policy/335fa9b8-f22d-4cda-acc8-d0a2b906c22b",
+                            "was_created": true
+                        },
+                        {
+                            "hash": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+                            "arn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+                            "was_created": false
+                        },
+                        {
+                            "hash": "d1ce631b618175472020a0c0e62ec975",
+                            "arn": "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+                            "was_created": false
+                        }
+                    ],
+                    "artifact_bucket": "cdev-working-artifacts",
+                    "artifact_key": "cdev_function_9cea304ea16d5a1fe4a3640b8105b722-241a00bb0b73ba8d75c8afd66bb2133c.zip",
+                    "layers": [
+                        "arn:aws:lambda:us-east-1:670580985562:layer:sqlalchemy_aurora_data_api_py3_none_any_1786b4c3f661754635ac0b006596ec16_c27998a1fa:1"
+                    ],
+                    "cloud_id": "arn:aws:lambda:us-east-1:670580985562:function:cdev_function_9cea304ea16d5a1fe4a3640b8105b722",
+                    "events": {
+                        "23595f240e0e79d011977b0c10108e61": {
+                            "integration_id": "ksg70yb",
+                            "permission_stmt_id": "stmt-km44u7l",
+                            "api_id": "kra1mdglg1",
+                            "route_id": "km44u7l"
+                        }
+                    },
+                    "cloud_region": "us-east-1"
+                }
+            },
+            "previous_resolved_cloud_values": {
+                "cdev::simple::relationaldb;demo_db": {},
+                "cdev::simple::lambda_layer;sqlalchemy_aurora_data_api-py3-none-any": {},
+                "cdev::simple::function;hello_world_function": {
+                    "cdev::simple::relationaldb;demo_db;cluster_arn": "arn:aws:rds:us-east-1:670580985562:cluster:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6",
+                    "cdev::simple::relationaldb;demo_db;secret_arn": "arn:aws:secretsmanager:us-east-1:670580985562:secret:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6-config-yOE8VD",
+                    "cdev::simple::api;demoapi;cloud_id": "kra1mdglg1",
+                    "cdev::simple::api;demoapi;endpoints": {
+                        "/hello_world GET": "lkq5j8t",
+                        "/post/create POST": "s1pq9w7"
+                    },
+                    "cdev::simple::relationaldb;demo_db;cloud_id": "arn:aws:rds:us-east-1:670580985562:cluster:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6",
+                    "cdev::simple::lambda_layer;sqlalchemy_aurora_data_api-py3-none-any;cloud_id": "arn:aws:lambda:us-east-1:670580985562:layer:sqlalchemy_aurora_data_api_py3_none_any_1786b4c3f661754635ac0b006596ec16_c27998a1fa:1"
+                },
+                "cdev::simple::function;create_post_function": {
+                    "cdev::simple::relationaldb;demo_db;cluster_arn": "arn:aws:rds:us-east-1:670580985562:cluster:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6",
+                    "cdev::simple::relationaldb;demo_db;secret_arn": "arn:aws:secretsmanager:us-east-1:670580985562:secret:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6-config-yOE8VD",
+                    "cdev::simple::api;demoapi;cloud_id": "kra1mdglg1",
+                    "cdev::simple::api;demoapi;endpoints": {
+                        "/hello_world GET": "lkq5j8t",
+                        "/post/create POST": "s1pq9w7"
+                    },
+                    "cdev::simple::relationaldb;demo_db;cloud_id": "arn:aws:rds:us-east-1:670580985562:cluster:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6",
+                    "cdev::simple::lambda_layer;sqlalchemy_aurora_data_api-py3-none-any;cloud_id": "arn:aws:lambda:us-east-1:670580985562:layer:sqlalchemy_aurora_data_api_py3_none_any_1786b4c3f661754635ac0b006596ec16_c27998a1fa:1"
+                },
+                "cdev::simple::api;demoapi": {},
+                "cdev::simple::function;get_posts_function": {
+                    "cdev::simple::relationaldb;demo_db;cluster_arn": "arn:aws:rds:us-east-1:670580985562:cluster:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6",
+                    "cdev::simple::relationaldb;demo_db;secret_arn": "arn:aws:secretsmanager:us-east-1:670580985562:secret:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6-config-yOE8VD",
+                    "cdev::simple::api;demoapi;cloud_id": "kra1mdglg1",
+                    "cdev::simple::api;demoapi;endpoints": {
+                        "/hello_world GET": "lkq5j8t",
+                        "/post/create POST": "s1pq9w7",
+                        "/posts/get GET": "km44u7l"
+                    },
+                    "cdev::simple::relationaldb;demo_db;cloud_id": "arn:aws:rds:us-east-1:670580985562:cluster:cdev-relationaldb-72f607b8029c67c99c2683ec6d4adac6",
+                    "cdev::simple::lambda_layer;sqlalchemy_aurora_data_api-py3-none-any;cloud_id": "arn:aws:lambda:us-east-1:670580985562:layer:sqlalchemy_aurora_data_api_py3_none_any_1786b4c3f661754635ac0b006596ec16_c27998a1fa:1"
+                }
+            },
+            "external_references": {}
+        }
+    ],
+    "component_name_to_uuid": {
+        "hello_world_comp": "4f5033f8-8a64-4354-b5b1-f4b47378eb47"
+    },
+    "parent_uuid": null,
+    "children": [],
+    "resource_changes": {},
+    "failed_changes": {}
+}

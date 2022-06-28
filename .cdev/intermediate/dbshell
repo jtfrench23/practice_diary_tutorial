@@ -1,0 +1,20 @@
+BEGIN
+INSERT INTO users(id, name) VALUES (1,'Paul Atreides');
+INSERT INTO users(id, name) VALUES (1,'Paul Atreides');
+SELECT * from users
+SELECT * from users
+BEGIN
+SELECT * 
+SELECT *
+SELECT * FROM posts
+SELECT * FROM posts
+BEGIN
+SELECT * FROM posts
+SELECT * FROM posts
+SELECT * FROM posts
+BEGIN
+SELECT * FROM posts
+SELECT * FROM posts
+BEGIN
+SELECT * FROM posts
+SELECT * FROM posts

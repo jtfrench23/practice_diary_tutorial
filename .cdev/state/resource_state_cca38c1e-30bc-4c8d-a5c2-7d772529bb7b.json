@@ -1,0 +1,10 @@
+{
+    "name": "stage",
+    "uuid": "cca38c1e-30bc-4c8d-a5c2-7d772529bb7b",
+    "components": [],
+    "component_name_to_uuid": {},
+    "parent_uuid": null,
+    "children": [],
+    "resource_changes": {},
+    "failed_changes": {}
+}
